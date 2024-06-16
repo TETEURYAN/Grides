@@ -56,7 +56,7 @@ signed main(){
     cin >> teatchers;
 
     vvi graph(teatchers+1);
-    
 
+    cout << "Valor inicial de vértices: " << teatchers << nl
     
 }
