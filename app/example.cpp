@@ -58,5 +58,5 @@ signed main(){
     vvi graph(teatchers+1);
 
     cout << "Valor inicial de vértices: " << teatchers << nl
-    
+    cout << "Valor inicial de cores: " << "NULL" << nl
 }
