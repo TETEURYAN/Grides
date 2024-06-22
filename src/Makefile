@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -std=c++11 -Wall
 TARGET = example.cpp
 SRC_FILE = ../app/$(TARGET)
-EX1_FILE = ../src/ex01.in
+EX1_FILE = ../tests/ex01.in
 MAIN_FILE = main
 
 all: example exec clean
