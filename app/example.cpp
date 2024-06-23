@@ -1,97 +1,145 @@
-from ortools.sat.python import cp_model
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#include "ortools/sat/cp_model.h"
+ 
+using namespace std;
+const int N1 = (int)2e5 + 100;
+#define DEBUG false
+#define db(x)  \
+    if (DEBUG) \
+    cout << #x << ": " << x << endl
+#define PI 3.14159265358979323846264338327
+#define forn for(int i=0;i<n;i++)
+#define forj for(int j=0;j<n;j++)
+#define fornn for(int i=1;i<=n;i++)
+#define fornj for(int j=1;j<=n;j++)
+#define each(i,c) for(__typeof((c).begin()) i=(c).begin(),i##_end=(c).end();i!=i##_end;++i)
+#define all(x) (x).begin(), (x).end()
+#define sz(a) (int)(a.size())
+#define lower(x) for(auto & i : x) i = tolower(i, locale());
+#define mem(a,b) memset((a),(b),sizeof(a))
+#define f first
+#define s second
+#define pb push_back
+#define pp pop_back
+#define mp make_pair
+#define yes cout<<"Yes"<<'\n';
+#define no  cout<<"No"<<'\n';
+#define one  cout<<-1<<'\n';
+#define nl  '\n';
+ 
+typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, less<int>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update> ordered_set;
+typedef long long ll;
+typedef set<ll> si;
+typedef set<char> sc;
+typedef vector<ll> vi;
+typedef priority_queue<ll> pri;
+typedef vector<char> vc;
+typedef pair<ll,ll> pi;
+typedef vector<pi>	vpi;
+typedef vector<vi>	vvi;
+typedef vector<vc>	vvc;
+typedef vector<string> vs;
+typedef vector<bool> vb;
+const long long M = 1e9+7;
+#define N  10000005
+#define lli unsigned long long int
+#define ll long long
 
-def main():
-    # Dados de entrada ajustados
-    professores = {
-        'Prof1': {'disciplinas': ['Mat1', 'Mat2'], 'horarios': list(range(1, 13)), 'carga_horaria': 6},
-        'Prof2': {'disciplinas': ['Mat3', 'Mat4'], 'horarios': list(range(1, 13)), 'carga_horaria': 6},
-        'Prof3': {'disciplinas': ['Mat5', 'Mat6'], 'horarios': list(range(1, 13)), 'carga_horaria': 6}
+using namespace operations_research;
+using namespace sat;
+using namespace std;
+
+map<string, pair<vector<string>, vector<int>>> GetData(const string& arquivo) {
+    ifstream infile(arquivo);
+    map<string, pair<vector<string>, vector<int>>> dados;
+    string linha;
+    while (getline(infile, linha)) {
+        istringstream iss(linha);
+        string professor, disciplina;
+        int horario;
+        iss >> professor;
+        vector<string> disciplinas;
+        vector<int> horarios_disponiveis;
+        while (iss >> disciplina >> horario) {
+            disciplinas.push_back(disciplina);
+            horarios_disponiveis.push_back(horario);
+        }
+        dados[professor] = make_pair(disciplinas, horarios_disponiveis);
+    }
+    return dados;
+}
+signed main(){
+        	
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    map<string, pair<vector<string>, vector<int>>> dados_professores = GetData("ex01.txt");
+
+    map<string, vector<string>> turmas = {
+        {"T1", {"Mat1", "Mat2", "Mat3"}},
+        {"T2", {"Mat1", "Mat4", "Mat5"}},
+        {"T3", {"Mat2", "Mat3", "Mat5"}}
+    };
+
+    CpModelBuilder model;
+
+    map<tuple<string, string, int>, BoolVar> x;
+    for (const auto& turma : turmas) {
+        for (const auto& materia : turma.second) {
+            for (int horario = 1; horario <= 3; ++horario) {
+                x[{turma.first, materia, horario}] = model.NewBoolVar();
+            }
+        }
     }
 
-    turmas = {
-        'T1': ['Mat1', 'Mat2', 'Mat3'],
-        'T2': ['Mat1', 'Mat4', 'Mat5'],
-        'T3': ['Mat2', 'Mat3', 'Mat5']
+    for (const auto& [professor, disciplinas_horarios] : dados_professores) {
+        const auto& [disciplinas, horarios_disponiveis] = disciplinas_horarios;
+        for (size_t i = 0; i < disciplinas.size(); ++i) {
+            const auto& disciplina = disciplinas[i];
+            const auto& horarios = horarios_disponiveis[i];
+            for (const auto& turma : turmas) {
+                if (find(turma.second.begin(), turma.second.end(), disciplina) != turma.second.end()) {
+                    LinearExpr sum;
+                    for (int horario : horarios) {
+                        sum += x[{turma.first, disciplina, horario}];
+                    }
+                    model.AddEquality(sum, 1);
+                }
+            }
+        }
     }
 
-    horarios = list(range(1, 13))  # 12 horários (6 de manhã e 6 de tarde)
-
-    # Carga horária das disciplinas
-    carga_horaria_disciplinas = {
-        'Mat1': 2,
-        'Mat2': 2,
-        'Mat3': 2,
-        'Mat4': 2,
-        'Mat5': 2,
-        'Mat6': 2
+    for (const auto& turma : turmas) {
+        for (int horario = 1; horario <= 3; ++horario) {
+            LinearExpr sum;
+            for (const auto& materia : turma.second) {
+                sum += x[{turma.first, materia, horario}];
+            }
+            model.AddLessOrEqual(sum, 1);
+        }
     }
 
-    # Criação do modelo CP-SAT
-    model = cp_model.CpModel()
+    CpSolver solver;
+    const CpSolverResponse response = solver.Solve(model.Build());
 
-    # Variáveis de decisão
-    x = {}
-    for prof in professores:
-        for turma in turmas:
-            for disciplina in professores[prof]['disciplinas']:
-                for horario in horarios:
-                    x[(prof, turma, disciplina, horario)] = model.NewBoolVar(f'x_{prof}_{turma}_{disciplina}_{horario}')
+    if (response.status() == CpSolverStatus::OPTIMAL || response.status() == CpSolverStatus::FEASIBLE) {
+        for (const auto& turma : turmas) {
+            cout << "Turma " << turma.first << ":\n";
+            for (const auto& materia : turma.second) {
+                for (int horario = 1; horario <= 3; ++horario) {
+                    if (solver.Value(x[{turma.first, materia, horario}])) {
+                        cout << "  Matéria " << materia << ": Horário " << horario << "\n";
+                    }
+                }
+            }
+        }
+    } else {
+        cout << "Nenhuma solução encontrada.\n";
+    }
 
-    # Restrições
-    # Cada disciplina de cada turma deve ser lecionada exatamente uma vez
-    for turma in turmas:
-        for disciplina in turmas[turma]:
-            model.Add(sum(x[(prof, turma, disciplina, horario)]
-                          for prof in professores
-                          if disciplina in professores[prof]['disciplinas']
-                          for horario in professores[prof]['horarios']
-                          if (prof, turma, disciplina, horario) in x) == 1)
+    return 0;
 
-    # Um professor não pode lecionar mais de uma disciplina no mesmo horário
-    for prof in professores:
-        for horario in horarios:
-            model.Add(sum(x[(prof, turma, disciplina, horario)]
-                          for turma in turmas
-                          for disciplina in professores[prof]['disciplinas']
-                          if (prof, turma, disciplina, horario) in x) <= 1)
 
-    # Restrições de carga horária dos professores
-    for prof in professores:
-        carga_horaria_max = professores[prof]['carga_horaria']
-        model.Add(sum(x[(prof, turma, disciplina, horario)] * carga_horaria_disciplinas[disciplina]
-                      for turma in turmas
-                      for disciplina in professores[prof]['disciplinas']
-                      for horario in horarios
-                      if (prof, turma, disciplina, horario) in x) <= carga_horaria_max)
-
-    # Resolver o modelo
-    solver = cp_model.CpSolver()
-    status = solver.Solve(model)
-
-    if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
-        print("Solução encontrada:")
-        for turma in turmas:
-            print(f"Turma {turma}:")
-            for disciplina in turmas[turma]:
-                alocado = False
-                for prof in professores:
-                    for horario in horarios:
-                        if (prof, turma, disciplina, horario) in x and solver.BooleanValue(x[(prof, turma, disciplina, horario)]):
-                            print(f"  Disciplina {disciplina} ministrada por {prof} no horário {horario}")
-                            alocado = True
-                if not alocado:
-                    print(f"  Disciplina {disciplina} não foi alocada")
-    else:
-        print("Nenhuma solução encontrada.")
-        # Adiciona informações detalhadas sobre as variáveis e restrições para depuração
-        for turma in turmas:
-            for disciplina in turmas[turma]:
-                for prof in professores:
-                    for horario in horarios:
-                        if (prof, turma, disciplina, horario) in x:
-                            print(f'x_{prof}_{turma}_{disciplina}_{horario} = {solver.BooleanValue(x[(prof, turma, disciplina, horario)])}')
-
-        print("\nVerifique os horários e cargas horárias para garantir consistência.")
-
-if __name__ == '__main__':
-    main()
+}
