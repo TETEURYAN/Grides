@@ -5,4 +5,4 @@
 .venv/
 
 ### Cache ###
-.app/files/__pycache__
+/__pycache__
