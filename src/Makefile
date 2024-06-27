@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -std=c++11 -Wall
 TARGET_C++ = example.cpp
-TARGET_PY = example.py
+TARGET_PY = main.py
 SRC_C++_FILE = ../app/$(TARGET_C++)
 SRC_PY_FILE = ../app/$(TARGET_PY)
 EX1_FILE = ../tests/ex01.in

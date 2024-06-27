@@ -3,3 +3,6 @@
 
 ### venv ###
 .venv/
+
+### Cache ###
+.app/files/__pycache__
