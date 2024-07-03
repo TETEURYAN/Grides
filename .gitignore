@@ -5,10 +5,16 @@
 .venv/
 
 ### Cache ###
-/__pycache__
+__pycache__/
 
 ### gitignore ###
 .gitignore
 
 ### uploads ###
-.front/uploads
+front/uploads/
+
+### uploads ###
+uploads/
+
+## log ##
+*.log

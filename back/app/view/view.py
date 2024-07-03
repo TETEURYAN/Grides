@@ -1,5 +1,6 @@
 import csv
 import pulp
+import utils.settings as st
 
 def materia_professor(materia, professor):
     return f"{materia} ({professor})"
@@ -35,7 +36,8 @@ def imprimir_total_aulas(turmas, materias, horarios, x):
         print(f"Total de aulas semanais para {turma}: {total_aulas}")
 
 def salvar_tabela_csv(turmas, dias_semana, horarios_por_dia, horarios, materias, professores, x):
-    with open('grade_horaria.csv', 'w', newline='') as csvfile:
+    ROOT_CSV = st.ROOT_GRIDE
+    with open(ROOT_CSV, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         
         # Escrever tabelas para cada turma

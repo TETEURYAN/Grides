@@ -29,14 +29,15 @@ def index():
             file.save(file_path)
             # Geração da grade horária
             controller = ScheduleController(file_path)
-            csv_file = controller.gerar_grade()
+            # csv_file = controller.gerar_grade()
+            
             return redirect('/view')
     return render_template('index.html')
 
 @app.route('/view', methods=['GET'])
 def view():
     # csv_file = 'grade_horaria.csv'
-    csv_file = '../back/src/grade_horaria.csv'
+    csv_file = './back/src/grade_horaria.csv'
     tables = []
     current_table = None
     with open(csv_file, 'r') as file:
@@ -57,4 +58,4 @@ def view():
 
 
 if __name__ == '__main__':
-    app.run(port=5001,debug=True)
+    app.run(port=5002,debug=True)
