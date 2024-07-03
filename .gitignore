@@ -6,3 +6,9 @@
 
 ### Cache ###
 /__pycache__
+
+### gitignore ###
+.gitignore
+
+### uploads ###
+.front/uploads
