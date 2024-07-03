@@ -8,7 +8,7 @@
 __pycache__/
 
 ### gitignore ###
-.gitignore
+gitignore
 
 ### uploads ###
 front/uploads/
