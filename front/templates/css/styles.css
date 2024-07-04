@@ -1,0 +1,81 @@
+:root {
+    --global-font-size: 15px;
+    --global-line-height: 1.4em;
+    --global-space: 10px;
+    --font-stack: "Menlo", "Monaco", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", serif;
+    --mono-font-stack: "Menlo", "Monaco", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", serif;
+    --background-color: #151515;
+    --page-width: 60em;
+    --font-color: #fff;
+    --invert-font-color: #151515;
+    --primary-color: #1a95e0;
+    --secondary-color: #727578;
+    --error-color: #d20962;
+    --input-style: solid;
+    --block-background-color: var(--background-color);
+}
+
+* {
+    box-sizing: border-box;
+    text-rendering: geometricprecision;
+}
+
+*::selection {
+    background: var(--primary-color);
+    color: var(--invert-font-color);
+}
+
+body {
+    font-size: var(--global-font-size);
+    color: var(--font-color);
+    line-height: var(--global-line-height);
+    margin: 0;
+    font-family: var(--font-stack);
+    word-wrap: break-word;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.table-title {
+    font-size: 1.5em;
+    margin-top: 40px;
+    color: var(--primary-color);
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+    color: var(--font-color);
+    font-family: var(--mono-font-stack);
+    background-color: #222;
+    border: 1px solid var(--secondary-color);
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid var(--secondary-color);
+}
+
+th {
+    background-color: var(--secondary-color);
+    color: var(--invert-font-color);
+}
+
+td {
+    background-color: var(--background-color);
+}

@@ -4,13 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grides</title>
+    <style>
+        :root {
+            --global-font-size: 15px;
+            --global-line-height: 1.4em;
+            --global-space: 10px;
+            --font-stack: "Menlo", "Monaco", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", serif;
+            --mono-font-stack: "Menlo", "Monaco", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", serif;
+            --background-color: #151515;
+            --page-width: 60em;
+            --font-color: #fff;
+            --invert-font-color: #151515;
+            --primary-color: #1a95e0;
+            --secondary-color: #727578;
+            --error-color: #d20962;
+            --input-style: solid;
+            --block-background-color: var(--background-color);
+        }
+
+        * {
+            box-sizing: border-box;
+            text-rendering: geometricprecision;
+        }
+
+        *::selection {
+            background: var(--primary-color);
+            color: var(--invert-font-color);
+        }
+
+        body {
+            font-size: var(--global-font-size);
+            color: var(--font-color);
+            line-height: var(--global-line-height);
+            margin: 0;
+            font-family: var(--font-stack);
+            word-wrap: break-word;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-top: 10px;
+            color: var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="file"] {
+            border: 1px var(--input-style) var(--font-color);
+            width: 100%;
+            padding: .7em .5em;
+            font-size: 1em;
+            font-family: var(--font-stack);
+            background-color: var(--background-color);
+            color: var(--font-color);
+        }
+
+        input[type="submit"] {
+            border-style: solid;
+            border-width: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none;
+            padding: .65em 2em;
+            font-size: 1em;
+            font-family: inherit;
+            user-select: none;
+            position: relative;
+            z-index: 1;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--invert-font-color);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        input[type="submit"]:focus {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: var(--page-width);
+            padding: var(--global-space);
+            background-color: #222;
+            border: 1px solid var(--secondary-color);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>GRIDES: Sua solução para alocação de horários!</h1>
-    <h2>Faça o upload do arquivo de entrada</h2>
-    <form action="/" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".txt,.csv">
-        <input type="submit" value="Gerar Grade">
-    </form>
+    <div class="container">
+        <h1>GRIDES</h1>
+        <h2>Sua solução para alocação de horários!</h2>
+        <h3>Faça o upload do arquivo de entrada</h3>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".txt,.csv">
+            <input type="submit" value="Gerar Grade">
+        </form>
+    </div>
 </body>
 </html>
