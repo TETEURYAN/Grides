@@ -86,8 +86,7 @@ for t in turmas:
 
 # Imprimir prévia dos horários na tela para as três turmas
 for turma in turmas:
-    print(f"\nPrévia dos Horários para {turma}:")
-    print('\t'.join([justify(dia, col_width) for dia in [''] + dias_semana]))
+    print(f"\nPrévia dos Horários para {turma}:") print('\t'.join([justify(dia, col_width) for dia in [''] + dias_semana]))
     for i in range(horarios_por_dia):
         linha = [justify(f'Horário {i+1}', col_width)]
         for j in range(len(dias_semana)):
@@ -100,6 +99,7 @@ for turma in turmas:
         print('\t'.join(linha))
 
 # Imprimir horários de cada professor
+
 print("\nHorários de cada professor:")
 for professor in alocacao_professores.keys():
     if alocacao_professores[professor]:

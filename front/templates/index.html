@@ -69,9 +69,10 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
+            width: 100%;
         }
 
-        input[type="file"] {
+        input[type="text"], textarea {
             border: 1px var(--input-style) var(--font-color);
             width: 100%;
             padding: .7em .5em;
@@ -81,7 +82,7 @@
             color: var(--font-color);
         }
 
-        input[type="submit"] {
+        input[type="submit"], button {
             border-style: solid;
             border-width: 1px;
             display: inline-flex;
@@ -101,13 +102,13 @@
             transition: background-color 0.3s, transform 0.3s;
         }
 
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, button:hover {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
             transform: scale(1.05);
         }
 
-        input[type="submit"]:focus {
+        input[type="submit"]:focus, button:focus {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
             transform: scale(1.05);
@@ -122,17 +123,68 @@
             border-radius: 10px;
             text-align: center;
         }
+
+        .input-group {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .input-group.active {
+            display: flex;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>GRIDES</h1>
         <h2>Sua solução para alocação de horários!</h2>
-        <h3>Faça o upload do arquivo de entrada</h3>
-        <form action="/" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".txt,.csv">
-            <input type="submit" value="Gerar Grade">
+        <form action="/" method="post">
+            <div id="input-sequence">
+                <div class="input-group active" id="step-1">
+                    <label for="num_turmas">Número de Turmas:</label>
+                    <input type="text" name="num_turmas" id="num_turmas" required>
+                    <button type="button" onclick="nextStep(1)">Próximo</button>
+                </div>
+                <div class="input-group" id="step-2">
+                    <label for="num_materias">Número de Matérias:</label>
+                    <input type="text" name="num_materias" id="num_materias" required>
+                    <button type="button" onclick="nextStep(2)">Próximo</button>
+                </div>
+                <div class="input-group" id="step-3">
+                    <label for="materias">Matérias e Cargas Horárias (uma por linha):</label>
+                    <textarea name="materias" id="materias" rows="4" required></textarea>
+                    <button type="button" onclick="nextStep(3)">Próximo</button>
+                </div>
+                <div class="input-group" id="step-4">
+                    <label for="num_professores">Número de Professores:</label>
+                    <input type="text" name="num_professores" id="num_professores" required>
+                    <button type="button" onclick="nextStep(4)">Próximo</button>
+                </div>
+                <div class="input-group" id="step-5">
+                    <label for="professores">Professores, Matérias e Cargas Horárias (uma por linha):</label>
+                    <textarea name="professores" id="professores" rows="4" required></textarea>
+                    <button type="button" onclick="nextStep(5)">Próximo</button>
+                </div>
+                <div class="input-group" id="step-6">
+                    <label for="disponibilidade">Disponibilidade dos Professores (1 - disponível, 0 - indisponível, uma linha por professor):</label>
+                    <textarea name="disponibilidade" id="disponibilidade" rows="6" required></textarea>
+                    <button type="submit">Gerar Grade</button>
+                </div>
+            </div>
         </form>
     </div>
+
+    <script>
+        let step = 1;
+
+        function nextStep(currentStep) {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            step++;
+            document.getElementById(`step-${step}`).classList.add('active');
+        }
+    </script>
 </body>
 </html>

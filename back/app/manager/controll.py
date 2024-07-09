@@ -3,9 +3,15 @@ from view.view import imprimir_previa_horarios, imprimir_horarios_professores, i
 import utils.files as fl
 
 class ScheduleController:
-    def __init__(self, caminho_arquivo):
-        self.caminho_arquivo = caminho_arquivo
-        self.materias, self.carga_horaria, self.professores, self.carga_professor, self.disponibilidade, self.turmas = fl.ler_arquivo_entrada(caminho_arquivo)
+    def __init__(self, materias, carga_horaria, professores, carga_professores, disponibilidade, turmas):
+        # self.caminho_arquivo = caminho_arquivo
+        self.materias = materias
+        self.carga_horaria = carga_horaria
+        self.professores = professores
+        self.carga_professor = carga_professores
+        self.disponibilidade = disponibilidade
+        self.turmas = turmas
+        # = fl.ler_arquivo_entrada(caminho_arquivo)
         self.model = ScheduleModel(self.materias, self.carga_horaria, self.professores, self.carga_professor, self.disponibilidade, self.turmas)
         self.model.solve()
         self.salvar_grade_csv()
