@@ -1,4 +1,4 @@
-# from flask import Flask, request, render_template, redirect, url_for, send_file
+# from flask import Flask, request, render_template, redirect, url_for, send_file, send_from_directory
 import os
 # import pandas as pd
 import csv
@@ -17,6 +17,10 @@ app = Flask(__name__)
 
 if not os.path.exists('./front/uploads'):
     os.makedirs('./front/uploads')
+
+@app.route('/icon/<path:filename>')
+def serve_icon(filename):
+    return send_from_directory('icon', filename)
 
 @app.route('/')
 def home():

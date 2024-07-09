@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="icon/logo.ico">
     <title>Grides</title>
     <style>
         :root {
@@ -17,6 +18,7 @@
             --invert-font-color: #151515;
             --primary-color: #1a95e0;
             --secondary-color: #727578;
+            --tertiary-color: #1e1e1e;
             --error-color: #d20962;
             --input-style: solid;
             --block-background-color: var(--background-color);
@@ -47,44 +49,82 @@
             text-align: center;
         }
 
-        h1 {
-            font-size: 3em;
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: #222;
+            border: 1px solid var(--secondary-color);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            width: 800px;
+            text-align: left;
+        }
+
+        .left-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        .left-section img {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+
+        .left-section h1 {
+            font-size: 2.5em;
             font-weight: bold;
             margin: 0;
         }
 
-        h2 {
-            font-size: 1.5em;
-            margin-top: 10px;
-            color: var(--primary-color);
+        .right-section {
+            flex: 1;
+            padding-left: 20px;
+            border-left: 1px solid var(--secondary-color);
         }
 
-        h3 {
-            font-size: 1.2em;
+        .right-section h2 {
+            font-size: 1.5em;
+            color: var(--primary-color);
             margin-bottom: 20px;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 10px;
-            width: 100%;
+        }
+
+        .input-group {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group.active {
+            display: flex;
+        }
+
+        label {
+            font-size: 1em;
+            color: var(--primary-color);
         }
 
         input[type="text"], textarea {
             border: 1px var(--input-style) var(--font-color);
-            width: 100%;
             padding: .7em .5em;
             font-size: 1em;
             font-family: var(--font-stack);
             background-color: var(--background-color);
             color: var(--font-color);
+            border-radius: 5px;
         }
 
         input[type="submit"], button {
             border-style: solid;
-            border-width: 1px;
+            border-width: 2px; /* Aumentar a borda preta quando o cursor não estiver por cima */
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -97,93 +137,94 @@
             position: relative;
             z-index: 1;
             background-color: var(--primary-color);
-            border-color: var(--primary-color);
+            border-color: black;
             color: var(--invert-font-color);
-            transition: background-color 0.3s, transform 0.3s;
+            transition: border-color 0.3s, transform 0.3s;
+            border-radius: 5px;
         }
 
         input[type="submit"]:hover, button:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transform: scale(1.05);
+            border-color: white;
+            border-width: 4px; /* Aumentar a espessura da borda */
+            color: white; /* Tornar a palavra "próximo" em branco */
+            transform: none; /* Remover o efeito de aumento */
         }
 
         input[type="submit"]:focus, button:focus {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transform: scale(1.05);
-        }
-
-        .container {
-            max-width: var(--page-width);
-            padding: var(--global-space);
-            background-color: #222;
-            border: 1px solid var(--secondary-color);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .input-group {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .input-group.active {
-            display: flex;
+            border-color: white;
+            border-width: 4px; /* Aumentar a espessura da borda */
+            color: white; /* Tornar a palavra "próximo" em branco */
+            transform: none; /* Remover o efeito de aumento */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>GRIDES</h1>
-        <h2>Sua solução para alocação de horários!</h2>
-        <form action="/" method="post">
-            <div id="input-sequence">
-                <div class="input-group active" id="step-1">
-                    <label for="num_turmas">Número de Turmas:</label>
-                    <input type="text" name="num_turmas" id="num_turmas" required>
-                    <button type="button" onclick="nextStep(1)">Próximo</button>
+        <div class="left-section">
+            <!-- <img src="icon/logo.png" alt="Logo do GRIDES"> -->
+            <h1>GRIDES</h1>
+        </div>
+        <div class="right-section">
+            <h2>Inserir dados do curso</h2>
+            <form action="/" method="post">
+                <div id="input-sequence">
+                    <div class="input-group active" id="step-1">
+                        <label for="num_turmas">Número de Turmas:</label>
+                        <input type="text" name="num_turmas" id="num_turmas" required>
+                        <button type="button" onclick="nextStep(1)">Próximo</button>
+                    </div>
+                    <div class="input-group" id="step-2">
+                        <label for="num_materias">Número de Matérias:</label>
+                        <input type="text" name="num_materias" id="num_materias" required>
+                        <button type="button" onclick="nextStep(2)">Próximo</button>
+                    </div>
+                    <div class="input-group" id="step-3">
+                        <label for="materias">Matérias e Cargas Horárias (uma por linha):</label>
+                        <textarea name="materias" id="materias" rows="4" required></textarea>
+                        <button type="button" onclick="nextStep(3)">Próximo</button>
+                    </div>
+                    <div class="input-group" id="step-4">
+                        <label for="num_professores">Número de Professores:</label>
+                        <input type="text" name="num_professores" id="num_professores" required>
+                        <button type="button" onclick="nextStep(4)">Próximo</button>    
+                    </div>
+                    <div class="input-group" id="step-5">
+                        <label for="professores">Professores, Matérias e Cargas Horárias (uma por linha):</label>
+                        <textarea name="professores" id="professores" rows="4" required></textarea>
+                        <button type="button" onclick="nextStep(5)">Próximo</button>
+                    </div>
+                    <div class="input-group" id="step-6">
+                        <label for="disponibilidade">Disponibilidade dos Professores (1 - disponível, 0 - indisponível, uma linha por professor):</label>
+                        <textarea name="disponibilidade" id="disponibilidade" rows="6" required></textarea>
+                        <button type="submit">Gerar Grade</button>
+                    </div>
                 </div>
-                <div class="input-group" id="step-2">
-                    <label for="num_materias">Número de Matérias:</label>
-                    <input type="text" name="num_materias" id="num_materias" required>
-                    <button type="button" onclick="nextStep(2)">Próximo</button>
-                </div>
-                <div class="input-group" id="step-3">
-                    <label for="materias">Matérias e Cargas Horárias (uma por linha):</label>
-                    <textarea name="materias" id="materias" rows="4" required></textarea>
-                    <button type="button" onclick="nextStep(3)">Próximo</button>
-                </div>
-                <div class="input-group" id="step-4">
-                    <label for="num_professores">Número de Professores:</label>
-                    <input type="text" name="num_professores" id="num_professores" required>
-                    <button type="button" onclick="nextStep(4)">Próximo</button>
-                </div>
-                <div class="input-group" id="step-5">
-                    <label for="professores">Professores, Matérias e Cargas Horárias (uma por linha):</label>
-                    <textarea name="professores" id="professores" rows="4" required></textarea>
-                    <button type="button" onclick="nextStep(5)">Próximo</button>
-                </div>
-                <div class="input-group" id="step-6">
-                    <label for="disponibilidade">Disponibilidade dos Professores (1 - disponível, 0 - indisponível, uma linha por professor):</label>
-                    <textarea name="disponibilidade" id="disponibilidade" rows="6" required></textarea>
-                    <button type="submit">Gerar Grade</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <script>
         let step = 1;
 
         function nextStep(currentStep) {
-            document.getElementById(`step-${currentStep}`).classList.remove('active');
-            step++;
-            document.getElementById(`step-${step}`).classList.add('active');
+            const currentInputGroup = document.getElementById(`step-${currentStep}`);
+            const nextInputGroup = document.getElementById(`step-${currentStep + 1}`);
+            const inputFields = currentInputGroup.querySelectorAll('input, textarea');
+
+            let allFilled = true;
+            inputFields.forEach(field => {
+                if (!field.value) {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                currentInputGroup.classList.remove('active');
+                nextInputGroup.classList.add('active');
+                step++;
+            } else {
+                alert('Por favor, preencha todos os campos antes de prosseguir.');
+            }
         }
     </script>
 </body>

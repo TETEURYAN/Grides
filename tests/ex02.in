@@ -1,0 +1,22 @@
+4
+4
+Matematica 5
+Portugues 5
+Historia 3
+Fisica 4
+5
+ProfA Matematica 10
+ProfB Portugues 10
+ProfC Historia 5
+ProfD Fisica 8
+ProfE Matematica 10
+ProfA
+1 1 0 0 1 0 0 0 1 0 1 0 1 1 1 0 0 1 1 1 1 1 1 0 0 1 1 0 0 0
+ProfB
+0 0 1 1 0 0 1 1 0 1 1 1 1 0 0 0 1 1 0 0 1 1 1 0 0 1 1 0 0 0
+ProfC
+1 1 1 0 1 1 1 0 1 1 1 0 0 1 0 0 1 1 1 0 1 1 1 0 0 1 1 0 0 0
+ProfD
+1 1 0 0 1 1 0 0 1 1 0 1 1 0 0 1 1 0 1 0 1 0 1 0 0 1 1 0 0 0
+ProfE
+1 1 1 0 0 0 0 0 1 0 0 1 1 0 0 0 1 1 0 0 1 0 0 0 0 1 1 0 0 0

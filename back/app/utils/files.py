@@ -37,5 +37,5 @@ def ler_arquivo_entrada(caminho_arquivo):
         disponibilidade[professor] = [int(x) for x in linhas[indice].strip().split()]
         indice += 1
 
-    turmas = [f'Turma{i+1}' for i in range(numero_turmas)]
+    turmas = [f'Turma {i+1}' for i in range(numero_turmas)]
     return materias, carga_horaria, professores, carga_professor, disponibilidade, turmas
