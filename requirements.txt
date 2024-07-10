@@ -8,7 +8,7 @@ Jinja2==3.1.4
 MarkupSafe==2.1.5
 # numpy==2.0.0
 ortools==9.10.4067
-pandas==2.2.2
+# pandas==2.2.2
 protobuf==5.27.1
 PuLP==2.8.0
 python-dateutil==2.9.0.post0
